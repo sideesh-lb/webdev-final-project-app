@@ -1,0 +1,9 @@
+.bg{
+    background-color:  #9A616D;
+}
+.card{
+    border-radius: 1rem;
+}
+.img{
+    border-radius: 1rem 0 0 1rem;
+}

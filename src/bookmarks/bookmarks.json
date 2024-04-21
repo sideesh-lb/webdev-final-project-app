@@ -1,0 +1,20 @@
+[
+  { "_id": 123, "name": "Microsoft Inc.",
+    "dayRange": "1234.65",
+    "WeekRange": "1078.19",
+    "marketCap": "$30.45",
+    "volume":"123,456"
+  },
+  { "_id": 456, "name": "Alphabet",
+    "dayRange": "4567.89",
+    "WeekRange": "5678.19",
+    "marketCap": "$60.45",
+    "volume":"1,223,456"
+  },
+  { "_id": 789, "name": "AGCO Inc.",
+    "dayRange": "123.56",
+    "WeekRange": "245.67",
+    "marketCap": "$50.45",
+    "volume":"23,456"
+  }
+]
