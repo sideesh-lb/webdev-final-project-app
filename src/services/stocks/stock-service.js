@@ -1,5 +1,7 @@
 import axios from "axios";
-const API_URL = "http://localhost:4000/stocks";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+const API_URL = `${BASE_URL}/stocks`;
 
 export const createStock = async (newStock) => {
   console.log("Before calling backend");

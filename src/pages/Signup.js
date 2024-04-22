@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+export const API_BASE = process.env.REACT_APP_BASE_URL;
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,7 @@ const SignUp = () => {
   const [confirmpassword, setConfirmpassword] = useState("");
   const [error, setError] = useState("");
 
+
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -17,7 +19,7 @@ const SignUp = () => {
     if (password !== confirmpassword) {
       alert("Passwords don't match");
     } else {
-      fetch("http://localhost:4000/sign-up", {
+      fetch(`${API_BASE}/sign-up`, {
         method: "POST",
         crossDomain: true,
         headers: {

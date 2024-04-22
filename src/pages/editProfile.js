@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+export const API_BASE = process.env.REACT_APP_BASE_URL;
 
 const axios = require('axios');
 
@@ -22,7 +23,7 @@ export default class EditProfile extends Component {
   }
   
   componentDidMount() {
-    fetch("http://localhost:4000/userData", {
+    fetch(`${API_BASE}/userData`, {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -50,7 +51,7 @@ export default class EditProfile extends Component {
     formData.append("user_id",this.state.user_id);
 
     //update-profile
-    axios.post("http://localhost:4000/userapi/update-profile/",formData,{
+    axios.post(`${API_BASE}/userapi/update-profile/`,formData,{
         headers: {
             "content-type": "application/json"
           }

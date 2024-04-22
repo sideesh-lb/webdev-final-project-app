@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+export const API_BASE = process.env.REACT_APP_BASE_URL;
 
 
 const handleEditProfile=()=>{
@@ -21,7 +22,7 @@ export default class UserDetails extends Component {
   }
   
   componentDidMount() {
-    fetch("http://localhost:4000/userData", {
+    fetch(`${API_BASE}/userData`, {
       method: "POST",
       crossDomain: true,
       headers: {
