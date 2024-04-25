@@ -2,16 +2,29 @@ import { React, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { findAllStocksLikedByUserThunk} from "../../services/likes/like-thunk"
 import Form from "react-bootstrap/Form";
+import { profile } from "../../services/user-service";
+import { setLoggedInUser } from "../../reducers/user-reducer";
 
 
 
 const ProfileComponentCompany = () => {
   const { user, loggedIn , allUsers, loading } = useSelector((state) => state.user);
   const{likes}=useSelector((state) => state.likes);
+
+  const fetchLoggedInProfile = async () => {
+    const curUser = await profile();
+    
+    if (curUser) {
+        dispatch(setLoggedInUser(curUser));
+        console.log("fetch profile", curUser);
+    };
+    
+}
  
  
 const dispatch=useDispatch()
   useEffect(() => {
+    fetchLoggedInProfile();
     console.log("in useffect")
     dispatch(findAllStocksLikedByUserThunk(user._id));
 

@@ -3,6 +3,7 @@ import "./profilepages/index.css";
 import { update } from "../services/user-service";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { profile } from "../services/user-service";
 
 import "./profilepages/index.css";
 import { useSelector, useDispatch,useStore } from "react-redux";
@@ -119,6 +120,22 @@ const PublicProfile = () => {
     function goToBookMarks() {
         navigate("/bookmarks");
     }
+    
+    const fetchLoggedInProfile = async () => {
+        const curUser = await profile();
+        
+        if (curUser) {
+            dispatch(setLoggedInUser(curUser));
+            console.log("fetch profile", curUser);
+        };
+        
+    }
+
+    useEffect(() => {
+        fetchLoggedInProfile();
+    
+      }, []);
+
     return (
         <>
             {console.log("Public profile is :", publicUser)}

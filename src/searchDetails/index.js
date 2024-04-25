@@ -15,6 +15,7 @@ import {
   resetStockDetailsThunk,
 } from "../services/stock-thunks";
 import { findAllStocksLikedByUser } from "../services/likes/like-service";
+import { setLoggedInUser } from "../reducers/user-reducer";
 
 const SearchDetails = () => {
   const { state } = useLocation();
@@ -58,7 +59,19 @@ const SearchDetails = () => {
     }
   }, []);
 
+  const fetchLoggedInProfile = async () => {
+    const curUser = await profile();
+    
+    if (curUser) {
+      alert(curUser.fname);
+        dispatch(setLoggedInUser(curUser));
+        console.log("fetch profile", curUser);
+    };
+    
+}
+
   useEffect(() => {
+    fetchLoggedInProfile();
     dispatch(resetStockDetailsThunk());
     dispatch(getStockDetailsThunk(stock.symbol));
     if (user) {

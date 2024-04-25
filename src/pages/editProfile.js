@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import { apiClient } from "../clients/axiosClients";
 export const API_BASE = process.env.REACT_APP_BASE_URL;
 
-const axios = require('axios');
 
 const handleProfile=()=>{
   window.location="/userdetails";
@@ -51,7 +51,7 @@ export default class EditProfile extends Component {
     formData.append("user_id",this.state.user_id);
 
     //update-profile
-    axios.post(`${API_BASE}/userapi/update-profile/`,formData,{
+    apiClient.post(`${API_BASE}/userapi/update-profile/`,formData,{
         headers: {
             "content-type": "application/json"
           }

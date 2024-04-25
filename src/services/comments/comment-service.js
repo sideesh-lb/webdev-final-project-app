@@ -1,9 +1,11 @@
-import axios from "axios";
+import { apiClient } from "../../clients/axiosClients";
+
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const COMMENTS_API = `${BASE_URL}/comments`;
 
-const api = axios
+const api = apiClient;
+
 
 export const findComments = (sid) => {
     console.log("Stock-ID -=>", sid)

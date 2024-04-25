@@ -1,11 +1,13 @@
-import axios from "axios";
+
+import { apiClient } from "../../clients/axiosClients";
 import * as stockService from "../stock-service";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const STOCKS_API = `${BASE_URL}`;
 
-const api = axios;
+
+const api = apiClient;
 
 export const toggleLike = async (uid, sid) => {
   const response = await api.put(`${STOCKS_API}/users/${uid}/likes/${sid}`);

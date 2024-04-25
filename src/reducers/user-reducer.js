@@ -24,6 +24,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setLoggedInUser(state, action) {
+      console.log("in looged in user reducer");
       state = { ...state, loggedIn: true, user: action.payload };
       console.log("INSIDE USER REDUCER ====> ", state.user)
       return state;

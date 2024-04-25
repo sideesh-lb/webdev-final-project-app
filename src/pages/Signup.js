@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { apiClient } from "../clients/axiosClients";
+
+
 export const API_BASE = process.env.REACT_APP_BASE_URL;
 
 const SignUp = () => {
@@ -13,44 +16,39 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(username, email, password, role, confirmpassword, error);
     if (password !== confirmpassword) {
       alert("Passwords don't match");
-    } else {
-      fetch(`${API_BASE}/sign-up`, {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-          role,
-          lname: "none",
-          fname: "none",
-          gender: "none",
-          dob: "none",
-          phonenumber: "none",
-          address: "none",
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data, "userRegister");
-          if (data.message === "Success") {
-            // window.localStorage.setItem("token", data.data);
-            navigate("/sign-in");
-          } else {
-            alert("USER ALREADY EXISTS USE DIFFERENT EMAIL ID");
-            window.location.href = "./sign-up";
-          }
-        });
+      return;
+    }
+
+    try {
+      const response = await apiClient.post(`${API_BASE}/sign-up`, {
+        username,
+        email,
+        password,
+        role,
+        lname: "none",
+        fname: "none",
+        gender: "none",
+        dob: "none",
+        phonenumber: "none",
+        address: "none",
+      });
+
+      console.log(response.data, "userRegister");
+      if (response.data.message === "Success") {
+        // window.localStorage.setItem("token", response.data.data);
+        navigate("/sign-in");
+      } else {
+        alert("USER ALREADY EXISTS USE DIFFERENT EMAIL ID");
+        window.location.href = "./sign-up";
+      }
+    } catch (error) {
+      console.error('Error during the registration process', error);
+      setError("Failed to register. Please try again.");
     }
   };
 

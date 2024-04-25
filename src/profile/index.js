@@ -19,19 +19,23 @@ import {
   changeAddress,
 } from "../reducers/user-reducer";
 import { setLoggedInUser } from "../reducers/user-reducer";
+import { profile } from "../services/user-service";
 
 const ProfileComponent = () => {
+
+  const dispatch = useDispatch();
+
   const store = useStore();
   const [file, setFile] = useState();
-  useEffect(() => {
-    // call api or anything
-    // setFile("../images/owner.jpg");
-  });
+
+  const { user, loggedIn } = useSelector((state) => state.user);
+
+
+  
   function handleChange(e) {
     console.log(e.target.files[0]);
     setFile(URL.createObjectURL(e.target.files[0]));
   }
-  const { user, loggedIn } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   let [isDisabled, setDisabled] = useState(true);
@@ -94,8 +98,6 @@ const ProfileComponent = () => {
     setAddress(newAddress);
   };
 
-  const dispatch = useDispatch();
-
 
   const saveProfile = (e) => {
     e.preventDefault();
@@ -119,6 +121,37 @@ const ProfileComponent = () => {
   function goToBookMarks() {
     navigate("/bookmarks");
   }
+
+  const fetchProfile = async () => {
+    const curUser = await profile();
+    console.log("sid", curUser);
+    dispatch(setLoggedInUser(curUser));
+    console.log("fetch profile", curUser);
+    setProfile(curUser);
+  }
+  
+
+  const setProfile = (cuser) => {
+    console.log("set Profile", cuser.gender);
+    setFirstName({ fname: cuser.fname });
+    setLastName({ lname: cuser.lname });
+    setPhoneNumber({
+      phonenumber: cuser.phonenumber,
+    });
+    setGender({ gender: cuser.gender });
+    setDateOfBirth({ dob: cuser.dob });
+    setAddress({ address: cuser.address });
+    // setFile(cuser.)
+  };
+
+  useEffect(() => {
+    // call api or anything
+    // setFile("../images/owner.jpg");
+    fetchProfile();
+
+  }, []);
+
+
   return (
     <div className="profileContainer container mt-2 mb-4">
       <div className="row" style={{ marginTop: "5px" }}>
@@ -228,6 +261,7 @@ const ProfileComponent = () => {
               <Form.Control
           as="select"
           custom
+          value={gender.gender}
           disabled={isDisabled}
           onChange={genderChangeHandler.bind(this)}
         >

@@ -6,6 +6,8 @@ import { UNSAFE_DataRouterStateContext, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import "./index.css";
 import Form from "react-bootstrap/Form";
+import { profile } from "../../services/user-service";
+import { setLoggedInUser } from "../../reducers/user-reducer";
 
 
 const ProfileComponentAdmin = () => {
@@ -34,6 +36,21 @@ var industry = allUsers.filter(function(ele){
  const countindustry =industry.length
     console.log(countindustry );
 
+const fetchLoggedInProfile = async () => {
+  const curUser = await profile();
+      
+  if (curUser) {
+      dispatch(setLoggedInUser(curUser));
+      console.log("fetch profile", curUser);
+  };
+      
+}
+
+const dispatch = useDispatch();
+
+useEffect(() => {
+  fetchLoggedInProfile();
+}, []);
 
   return (
     <section className="bg-light">
@@ -79,7 +96,7 @@ var industry = allUsers.filter(function(ele){
                         </Form.Group>
                     </div>
 
-                    <div className="form-outline mb-4">
+                    {/* <div className="form-outline mb-4">
                     <Form.Group className="mb-3" controlId="stocks">
                       <Form.Label>TOTAL STOCKS</Form.Label>
                          <Form.Control
@@ -89,7 +106,7 @@ var industry = allUsers.filter(function(ele){
                          />
                         <Form.Text className="text-muted"></Form.Text>
                         </Form.Group>
-                    </div>
+                    </div> */}
 
                     
                   </Form>

@@ -1,9 +1,11 @@
-import axios from "axios";
+import { thirdPartyClient } from "../../clients/axiosClients"
+
 
 const SEARCH_URL = 'https://twelve-data1.p.rapidapi.com/symbol_search?'
 const DETAILS_URL = 'https://omdbapi.com/?apikey=852159f0&i='
 const API_KEY = '249ccaf1eamshf53cc28facd0888p1d76d3jsn29ef4514da90'
 const API_HOST = 'twelve-data1.p.rapidapi.com'
+
 
 export const findStockBySearchTerm = async (term) => {
     const config = {
@@ -16,7 +18,7 @@ export const findStockBySearchTerm = async (term) => {
             'outputsize' : '1000'
         }
     }
-    const response = await axios.get(`${SEARCH_URL}${term}`, config)
+    const response = await thirdPartyClient.get(`${SEARCH_URL}${term}`, config)
         .then(response => {
             // console.log("Response from API :",response.data)
             return response.data
@@ -38,6 +40,6 @@ export const findStockBySearchTerm = async (term) => {
 }
 
 export const findMovieByImdbId = async (imdbID) => {
-    const response = await axios.get(`${DETAILS_URL}${imdbID}`)
+    const response = await thirdPartyClient.get(`${DETAILS_URL}${imdbID}`)
     return response.data
 }

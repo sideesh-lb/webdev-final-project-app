@@ -1,6 +1,8 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { profile } from "../services/user-service";
+import { setLoggedInUser } from "../reducers/user-reducer";
 
 const HomePageBanner = () => {
   const { user, loggedIn } = useSelector((state) => state.user);
@@ -9,6 +11,23 @@ const HomePageBanner = () => {
   const handleStart = () => {
     navigate("/sign-in");
   };
+
+  const fetchLoggedInProfile = async () => {
+    const curUser = await profile();
+    
+    if (curUser) {
+        dispatch(setLoggedInUser(curUser));
+        console.log("fetch profile", curUser);
+    };
+    
+}
+
+const dispatch = useDispatch();
+
+useEffect(() => {
+    fetchLoggedInProfile();
+
+  }, []);
 
   return (
     <div className="wd-home-banner p-5">

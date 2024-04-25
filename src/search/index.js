@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationComponent from "../navigation";
 import { findStockBySearchTermThunk } from "../services/search/search-thunk";
 import HomeStockStrip from "../home/home-stock-strip";
 import {navigateStockAndNavigate} from "../services/stocks/stock-thunk";
 import { createStock } from "../services/stocks/stock-service";
+import { profile } from "../services/user-service";
+import { setLoggedInUser } from "../reducers/user-reducer";
 
 const Search = () => {
   const [title, setTitle] = useState("");
@@ -16,6 +18,21 @@ const Search = () => {
   const searchForStock = () => {
     dispatch(findStockBySearchTermThunk(title));
   };
+
+  const fetchLoggedInProfile = async () => {
+    const curUser = await profile();
+    
+    if (curUser) {
+        dispatch(setLoggedInUser(curUser));
+        console.log("fetch profile", curUser);
+    };
+    
+}
+
+useEffect(() => {
+    fetchLoggedInProfile();
+
+  }, []);
   return (
     <div>
       <HomeStockStrip />

@@ -8,6 +8,8 @@ import {
 } from "../services/likes/like-thunk";
 import { countHowManyCommentsThunk } from "../services/comments/comment-thunk";
 import { useNavigate } from "react-router-dom";
+import { setLoggedInUser } from "../reducers/user-reducer";
+import { profile } from "../services/user-service";
 
 const StockStats = ({
   newComment,
@@ -25,7 +27,18 @@ const StockStats = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const fetchLoggedInProfile = async () => {
+    const curUser = await profile();
+    
+    if (curUser) {
+        dispatch(setLoggedInUser(curUser));
+        console.log("fetch profile", curUser);
+    };
+    
+}
+
   useEffect(() => {
+    fetchLoggedInProfile();
     dispatch(resetLikesThunk());
     dispatch(countHowManyLikesThunk(stockID));
     dispatch(countHowManyCommentsThunk(stockID));

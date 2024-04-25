@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UNSAFE_DataRouterStateContext, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../reducers/user-reducer";
+import { userLogout } from "../services/user-service";
 
 const NavigationComponent = () => {
   const [expanded, setExpanded] = useState(false);
@@ -22,11 +23,16 @@ const NavigationComponent = () => {
     setExpanded((e) => !e);
   };
 
-  const handleLogout = () => {
+  const fnLogOut = async () => {
+    await userLogout();
     setExpanded(false);
     dispatch(logout());
     navigate("/");
     window.location.reload();
+  };
+
+  const handleLogout = () => {
+    fnLogOut();
   };
 
   return (
